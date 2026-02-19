@@ -33,6 +33,14 @@ if os.environ.get('CODESPACE_NAME'):
 # Use X-Forwarded-Host header for correct URL generation in Codespaces
 USE_X_FORWARDED_HOST = True
 
+# CSRF settings for Codespaces
+CSRF_TRUSTED_ORIGINS = []
+if os.environ.get('CODESPACE_NAME'):
+    CSRF_TRUSTED_ORIGINS.append(f"https://{os.environ.get('CODESPACE_NAME')}-8000.app.github.dev")
+
+# Handle HTTPS behind proxy (required for Codespaces)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Application definition
 
 INSTALLED_APPS = [
